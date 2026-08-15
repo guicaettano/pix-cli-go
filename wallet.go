@@ -13,26 +13,31 @@ func (c *Account) Deposit(value float64) {
 	}
 }
 
-func (c *Account) Withdraw(value float64) bool {
-	if value > c.Balance || value > 0 {
-		return false
+func (c *Account) Withdraw(value float64) error {
+	if value <= 0 {
+		return fmt.Errorf("o valor deve ser maior que zero")
+	}
+
+	if value > c.Balance {
+		return fmt.Errorf("saldo insuficiente")
 	}
 
 	c.Balance -= value
-	return true
+	return nil
 }
 
-func (c *Account) Transfer(destination *Account, value float64) bool {
+func (c *Account) Transfer(destination *Account, value float64) error {
 	if c == destination {
-		return false
+		return fmt.Errorf("a conta de origem e destino são iguais")
 	}
 
-	if !c.Withdraw(value) {
-		return false
+	if err := c.Withdraw(value); err != nil {
+		return err
 	}
 
 	destination.Deposit(value)
-	return true
+
+	return nil
 }
 
 func (c Account) Show() {

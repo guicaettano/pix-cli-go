@@ -63,10 +63,12 @@ func main() {
 				continue
 			}
 
-			if account.Withdraw(value) {
-				fmt.Println("Saque realizado!")
+			err := account.Withdraw(value)
+
+			if err != nil {
+				fmt.Println("Erro:", err)
 			} else {
-				fmt.Println("Saldo insuficiente")
+				fmt.Println("Saque realizado!")
 			}
 
 		case 4:
@@ -90,15 +92,20 @@ func main() {
 				continue
 			}
 
-			if accountOrigin.Transfer(accountOrigin, accountDestination, value) {
-				historic = append(historic, Transaction{
-					Origin: origin, Destination: destination, Value: value,
-				})
+			err := accountOrigin.Transfer(accountDestination, value)
 
-				fmt.Println("Pix realizado com sucesso!")
-			} else {
-				fmt.Println("Saldo insuficiente.")
+			if err != nil {
+				fmt.Println("Erro:", err)
+				continue
 			}
+
+			historic = append(historic, Transaction{
+				Origin:      origin,
+				Destination: destination,
+				Value:       value,
+			})
+
+			fmt.Println("Pix realizado com sucesso!")
 
 		case 5:
 			if len(historic) == 0 {
