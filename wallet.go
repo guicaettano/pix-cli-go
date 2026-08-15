@@ -8,11 +8,13 @@ type Account struct {
 }
 
 func (c *Account) Deposit(value float64) {
-	c.Balance += value
+	if value > 0 {
+		c.Balance += value
+	}
 }
 
 func (c *Account) Withdraw(value float64) bool {
-	if value > c.Balance {
+	if value > c.Balance && value > 0 {
 		return false
 	}
 
@@ -20,8 +22,8 @@ func (c *Account) Withdraw(value float64) bool {
 	return true
 }
 
-func (c *Account) Transfer(destination *Account, value float64) bool {
-	if !c.Withdraw(value) {
+func (c *Account) Transfer(origin *Account, destination *Account, value float64) bool {
+	if !c.Withdraw(value) && origin == destination {
 		return false
 	}
 

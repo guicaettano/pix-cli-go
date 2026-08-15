@@ -90,7 +90,7 @@ func main() {
 				continue
 			}
 
-			if accountOrigin.Transfer(accountDestination, value) {
+			if accountOrigin.Transfer(accountOrigin, accountDestination, value) {
 				historic = append(historic, Transaction{
 					Origin: origin, Destination: destination, Value: value,
 				})
