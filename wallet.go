@@ -7,6 +7,19 @@ type Account struct {
 	Balance float64
 }
 
+func CreateAccount(bank map[string]*Account, key string, name string) error {
+	if _, exists := bank[key]; exists {
+		return fmt.Errorf("conta já existe")
+	}
+
+	bank[key] = &Account{
+		Name:    name,
+		Balance: 0,
+	}
+
+	return nil
+}
+
 func (c *Account) Deposit(value float64) {
 	if value > 0 {
 		c.Balance += value

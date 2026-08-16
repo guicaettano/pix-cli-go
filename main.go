@@ -128,14 +128,11 @@ func main() {
 			fmt.Print("Chave Pix: ")
 			fmt.Scan(&key)
 
-			if _, exists := bank[key]; exists {
-				fmt.Println("Conta já existe!")
-				continue
-			}
+			err := CreateAccount(bank, key, name)
 
-			bank[key] = &Account{
-				Name:    name,
-				Balance: 0,
+			if err != nil {
+				fmt.Println("Erro:", err)
+				continue
 			}
 
 			fmt.Println("Conta criada com sucesso!")
