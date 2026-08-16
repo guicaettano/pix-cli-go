@@ -16,6 +16,7 @@ func main() {
 		fmt.Println("3 - Sacar")
 		fmt.Println("4 - Transferir (Pix)")
 		fmt.Println("5 - Histórico")
+		fmt.Println("6 - Criar conta")
 		fmt.Println("0 - Sair")
 
 		var option int
@@ -116,6 +117,28 @@ func main() {
 			for i, t := range historic {
 				fmt.Printf("%d. %s -> %s | R$ %.2f\n", i+1, t.Origin, t.Destination, t.Value)
 			}
+
+		case 6:
+			var key string
+			var name string
+
+			fmt.Print("Nome: ")
+			fmt.Scan(&name)
+
+			fmt.Print("Chave Pix: ")
+			fmt.Scan(&key)
+
+			if _, exists := bank[key]; exists {
+				fmt.Println("Conta já existe!")
+				continue
+			}
+
+			bank[key] = &Account{
+				Name:    name,
+				Balance: 0,
+			}
+
+			fmt.Println("Conta criada com sucesso!")
 
 		case 0:
 			fmt.Println("Muito obrigado, até breve!")
