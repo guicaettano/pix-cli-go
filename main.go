@@ -6,8 +6,8 @@ func main() {
 	bank := make(map[string]*Account)
 	historic := []Transaction{}
 
-	bank["gui"] = &Account{Name: "Guilherme", Balance: 500}
-	bank["ni"] = &Account{Name: "Nicole", Balance: 300}
+	bank["gui"] = &Account{Name: "Guilherme", Balance: 50000}
+	bank["ni"] = &Account{Name: "Nicole", Balance: 30000}
 
 	for {
 		fmt.Println("\n=== PIX CLI GO ===")
@@ -26,12 +26,12 @@ func main() {
 		switch option {
 		case 1:
 			for key, account := range bank {
-				fmt.Printf("%s - %s: R$ %.2f\n", key, account.Name, account.Balance)
+				fmt.Printf("%s - %s: %s\n", key, account.Name, formatMoney(account.Balance))
 			}
 
 		case 2:
 			var key string
-			var value float64
+			var value int64
 
 			fmt.Print("Conta: ")
 			fmt.Scan(&key)
@@ -50,7 +50,7 @@ func main() {
 
 		case 3:
 			var key string
-			var value float64
+			var value int64
 
 			fmt.Print("Conta: ")
 			fmt.Scan(&key)
@@ -74,7 +74,7 @@ func main() {
 
 		case 4:
 			var origin, destination string
-			var value float64
+			var value int64
 
 			fmt.Print("Origem: ")
 			fmt.Scan(&origin)
@@ -115,7 +115,7 @@ func main() {
 			}
 
 			for i, t := range historic {
-				fmt.Printf("%d. %s -> %s | R$ %.2f\n", i+1, t.Origin, t.Destination, t.Value)
+				fmt.Printf("%d. %s -> %s | R$ %s\n", i+1, t.Origin, t.Destination, formatMoney(t.Value))
 			}
 
 		case 6:

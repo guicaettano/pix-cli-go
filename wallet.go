@@ -4,7 +4,11 @@ import "fmt"
 
 type Account struct {
 	Name    string
-	Balance float64
+	Balance int64
+}
+
+func formatMoney(value int64) string {
+	return fmt.Sprintf("R$ %d,%02d", value/100, value%100)
 }
 
 func CreateAccount(bank map[string]*Account, key string, name string) error {
@@ -20,13 +24,13 @@ func CreateAccount(bank map[string]*Account, key string, name string) error {
 	return nil
 }
 
-func (c *Account) Deposit(value float64) {
+func (c *Account) Deposit(value int64) {
 	if value > 0 {
 		c.Balance += value
 	}
 }
 
-func (c *Account) Withdraw(value float64) error {
+func (c *Account) Withdraw(value int64) error {
 	if value <= 0 {
 		return fmt.Errorf("o valor deve ser maior que zero")
 	}
@@ -39,7 +43,7 @@ func (c *Account) Withdraw(value float64) error {
 	return nil
 }
 
-func (c *Account) Transfer(destination *Account, value float64) error {
+func (c *Account) Transfer(destination *Account, value int64) error {
 	if c == destination {
 		return fmt.Errorf("a conta de origem e destino são iguais")
 	}
@@ -54,5 +58,5 @@ func (c *Account) Transfer(destination *Account, value float64) error {
 }
 
 func (c Account) Show() {
-	fmt.Printf("%s - Saldo: R$ %.2f\n", c.Name, c.Balance)
+	fmt.Printf("%s - Saldo: R$ %s\n", c.Name, formatMoney(c.Balance))
 }

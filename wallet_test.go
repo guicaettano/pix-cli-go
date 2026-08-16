@@ -41,15 +41,15 @@ func TestTransferInsufficientBalance(t *testing.T) {
 
 	if guilherme.Balance != 100 {
 		t.Errorf(
-			"saldo do Guilherme deveria continuar em 100, recebeu %.2f",
-			guilherme.Balance,
+			"saldo do Guilherme deveria continuar em 100, recebeu %s",
+			formatMoney(guilherme.Balance),
 		)
 	}
 
 	if nicole.Balance != 300 {
 		t.Errorf(
-			"saldo da Nicole deveria continuar em 300, recebeu %.2f",
-			nicole.Balance,
+			"saldo da Nicole deveria continuar em 300, recebeu %s",
+			formatMoney(nicole.Balance),
 		)
 	}
 }
